@@ -24,16 +24,22 @@ def choice(mode):
     else:
         print("中途退出生成")
         exit()
-def choice_block():
-    print("请选择方块")
-    data = {"1":"stone","2":"grass","3":"dirt","4":"cobblestone","5":"planks","6":"sapling","7":"bedrock"}
-    print("1.石头 2.草方块 3.泥土 4.圆石 5.木板 6.树苗 7.基岩")
-    choice_input = input(">>>")
-    if choice_input in data:
-        pycommand(data[choice_input])
-    else:
-        print("中途退出生成")
+def choice_item():
+    print("请输入物品的正确名称(中英文皆可)且确保您已接入互联网/拥有requests库")
+    try:
+        import requests
+        choice_input = input(">>>")
+        url = f"https://ca.projectxero.top/idlist/search?q={choice_input}"
+        response = requests.get(url, timeout=10)
+        data = response.json()["data"]
+        result = str(data["result"])
+        a = eval(result.replace("[","").replace("]",""))
+        pycommand(" " + a["key"])
+    except:
+        print("请检查你的互联网连接/数据库无此物品/你是否有requests库(pip install requests)")
         exit()
+def choice_parameter():
+    print("添加选择器参数")
 file_0 = open("pycommand.txt","w")
 file_0.close()
 open("pycommand.txt","w").write("")
@@ -59,23 +65,7 @@ elif one == "2":
     pycommand("/give")
     choice("1")
     print("请选择要给予的方块")
-    print("1.命令方块 2.结构方块 3.结构空位 4.自行输入方块id(tips:推荐去查Minecraft Wiki)")
-    input_3 = input(">>>")
-    if input_3 == "1":
-        pycommand(" command_block")
-        print("已生成'command_block'")
-    elif input_3 == "2":
-        pycommand(" structure_block")
-        print("已生成'structure_block'")
-    elif input_3 == "3":
-        pycommand(" structure_void")
-        print("已生成'structure_void'")
-    elif input_3 == "4":
-        pycommand(" " + input(">>>"))
-        print("已生成")
-    else:
-        print("中途退出生成")
-        exit()
+    choice_item()
     print("请输入物品数量")
     pycommand(" " + input(">>>"))
     print("生成完成")
