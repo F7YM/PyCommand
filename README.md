@@ -1,2 +1,3 @@
 # pycommand
-##pycommand是一个基于python的Minecraft指令生成器，目前无图形化界面
+pycommand是一个基于python的Minecraft指令生成器，目前无图形化界面
+使用BSD 3协议开源
